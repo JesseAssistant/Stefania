@@ -1,0 +1,15 @@
+{
+  "format": "STEFANIA_WORLD_SAVE",
+  "schemaVersion": 0,
+  "version": "0.9",
+  "profile": { "name": "Stefania", "level": 7, "xp": 340 },
+  "wallet": { "bananas": 1250, "coins": 310, "crystals": 12 },
+  "heroes": ["pip", "mochi", "zuzu"],
+  "heroLevels": { "pip": { "lvl": 4, "xp": 55 }, "zuzu": { "lvl": 2, "xp": 10 } },
+  "closet": ["tee-sun", "cap-red", "chef-coat"],
+  "wearing": { "pip": { "hat": "cap-red", "outfit": "tee-sun" } },
+  "stars": { "w1l1": 3, "w1l2": 2, "w1l3": 1 },
+  "roomLevels": { "hall": 2, "kitchen": 1 },
+  "achievements": ["first-banana"],
+  "settings": { "music": false, "sfx": true }
+}

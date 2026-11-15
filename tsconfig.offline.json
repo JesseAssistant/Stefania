@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "comment": "Только для среды без сети: подключает упрощённые типы React вместо @types/react.",
+  "include": [
+    "src",
+    "tests/unit",
+    "tests/integration",
+    "tests/migration",
+    "types-shim",
+    "scripts/*.tsx"
+  ],
+  "compilerOptions": {
+    "types": [
+      "node"
+    ]
+  }
+}

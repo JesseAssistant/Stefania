@@ -1,0 +1,59 @@
+name: CI и публикация
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Типы, тесты, сборка, e2e
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Установка зависимостей
+        run: npm install --no-audit --no-fund
+      - name: Проверка типов (TypeScript, настоящие @types/react)
+        run: npm run typecheck
+      - name: Юнит-, интеграционные тесты и тесты миграций
+        run: npm test
+      - name: Сборка
+        run: npm run build
+      - name: Браузер для e2e
+        run: npx playwright install --with-deps chromium
+      - name: e2e (установка, офлайн, подпуть, сохранения)
+        run: npm run test:e2e
+      - name: Проверка: в продакшен-сборке нет тестового хука
+        run: |
+          if grep -rl "__game" dist; then echo "В dist найден window.__game"; exit 1; fi
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Публикация на GitHub Pages
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

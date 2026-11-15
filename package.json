@@ -1,0 +1,31 @@
+{
+  "name": "stefanias-nanabo-world",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stefania's Nanabo World — персональная офлайн-игра (PWA) для iPhone",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:e2e": "node scripts/build.mjs --e2e --out dist-e2e",
+    "preview": "node scripts/serve.mjs --port 4173 --base /stefania-nanabo-world/",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test \"tests/unit/*.test.ts\" \"tests/integration/*.test.ts\" \"tests/migration/*.test.ts\"",
+    "test:e2e": "node tests/e2e/run.mjs",
+    "icons": "node --import tsx scripts/gen-icons.tsx",
+    "ci": "npm run typecheck && npm test && npm run build && npm run test:e2e"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "esbuild": "^0.25.0",
+    "playwright": "^1.50.0",
+    "sharp": "^0.34.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
